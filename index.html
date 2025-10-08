@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>폰트 미리보기 툴 Font Preview Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+
+<body class="main-body">
+  <div class="main-wrapper">
+    <div class="functions-container">
+    <div class="font-preview">
+        <div class="font-selector-section noto-sans">
+          <div class="font-selector-wrapper">
+            <div class="font-dots" role="tablist" aria-label="폰트 선택"></div>
+          </div>
+      </div>
+      <div class="controls-section noto-sans">
+        <div class="writing-mode-control">
+          <div class="control-label">쓰기 방향</div>
+          <div class="control-input">
+            <div class="toggle-dots" role="tablist" aria-label="텍스트 방향">
+              <button type="button" class="dot active" aria-pressed="true" data-dir="0" onclick="setTextDirection(0)"></button>
+              <span class="dot-label" role="button" tabindex="0" onclick="setTextDirection(0)">가로쓰기</span>
+              <button type="button" class="dot" aria-pressed="false" data-dir="1" onclick="setTextDirection(1)"></button>
+              <span class="dot-label" role="button" tabindex="0" onclick="setTextDirection(1)">세로쓰기</span>
+            </div>
+          </div>
+        </div>
+        <div class="font-size-control">
+          <div class="control-label">글자 크기</div>
+          <div class="control-input">
+            <input type="range" min="15" max="45" value="30" step="1" oninput="changeFontSize(this.value)">
+          </div>
+        </div>
+        <div class="letter-spacing-control">
+          <div class="control-label">글자 사이</div>
+          <div class="control-input">
+            <input type="range" min="-100" max="100" value="0" step="10" oninput="showValueLetter(this.value)">
+          </div>
+        </div>
+        <div class="line-height-control">
+          <div class="control-label">글줄 사이</div>
+          <div class="control-input">
+            <input type="range" min="1" max="2.0" value="1.5" step="0.1" oninput="showValueHeight(this.value)">
+          </div>
+        </div>
+      </div>
+      <div id="textEditor" contenteditable="true" spellcheck="false"></div>
+    </div>
+  </div>
+
+  <div class="glyph-container">
+    <div class="glyphs">
+      <div class="glyphs-cover">
+      </div>
+      <div class="glyphs-content">
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+<script src="edit-here.js" defer></script>
+<script src="assets/js/font-loader.js" defer></script>
+<script src="assets/js/glyph-converter.js" defer></script>
+<script src="assets/js/interface-controller.js" defer></script>
+
+</html>
