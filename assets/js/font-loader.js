@@ -63,20 +63,56 @@ document.addEventListener('DOMContentLoaded', function() {
         editableDiv.innerHTML = window.sampleText;
       }
       
-      // 초기 폰트 크기 설정
-      if (window.initialSettings.fontSize) {
-        editableDiv.style.fontSize = window.initialSettings.fontSize + "px";
+      // edit-here.js의 값들을 중간값으로 만들기 위해 range 조정
+      const targetFontSize = window.initialSettings.fontSize || 30;
+      const targetLetterSpacing = window.initialSettings.letterSpacing || 0;
+      const targetLineHeight = window.initialSettings.lineHeight || 1.5;
+      
+      // 폰트 크기 range 조정 (targetFontSize가 중간값이 되도록)
+      const fontSizeRange = { min: targetFontSize - 15, max: targetFontSize + 15 };
+      editableDiv.style.fontSize = targetFontSize + "px";
+      
+      // 줄 간격 range 조정 (targetLineHeight가 중간값이 되도록)
+      const lineHeightRange = { min: targetLineHeight - 0.5, max: targetLineHeight + 0.5 };
+      updateLineHeight(targetLineHeight);
+      
+      // 글자 간격 range 조정 (targetLetterSpacing이 중간값이 되도록)
+      const letterSpacingRange = { min: targetLetterSpacing - 100, max: targetLetterSpacing + 100 };
+      showValueLetter(targetLetterSpacing * 10);
+      
+      // HTML range input 요소들의 min/max 값 동적 조정
+      const fontSizeSlider = document.querySelector('input[type="range"][oninput="changeFontSize(this.value)"]');
+      if (fontSizeSlider) {
+        fontSizeSlider.min = fontSizeRange.min;
+        fontSizeSlider.max = fontSizeRange.max;
+        fontSizeSlider.value = targetFontSize;
       }
       
-      // 초기 줄 간격 설정
-      if (window.initialSettings.lineHeight) {
-        updateLineHeight(window.initialSettings.lineHeight);
+      const lineHeightSlider = document.querySelector('input[type="range"][oninput="showValueHeight(this.value)"]');
+      if (lineHeightSlider) {
+        lineHeightSlider.min = lineHeightRange.min;
+        lineHeightSlider.max = lineHeightRange.max;
+        lineHeightSlider.value = targetLineHeight;
       }
       
-      // 초기 글자 간격 설정
-      if (window.initialSettings.letterSpacing) {
-        showValueLetter(window.initialSettings.letterSpacing * 1000);
+      const letterSpacingSlider = document.querySelector('input[type="range"][oninput="showValueLetter(this.value)"]');
+      if (letterSpacingSlider) {
+        letterSpacingSlider.min = letterSpacingRange.min;
+        letterSpacingSlider.max = letterSpacingRange.max;
+        letterSpacingSlider.value = targetLetterSpacing * 10;
       }
+      
+      // 초기 텍스트 방향 설정 (함수 정의 후 실행)
+      if (window.initialSettings.textDirection !== undefined) {
+        setTimeout(() => {
+          setTextDirection(parseInt(window.initialSettings.textDirection));
+        }, 0);
+      }
+      
+      // 해상도별 스케일링 적용
+      setTimeout(() => {
+        applyResolutionScaling();
+      }, 100);
     }
   }
 
@@ -149,6 +185,9 @@ function setTextDirection(dirIndex) {
   const textDirection = ["horizontal-tb", "vertical-rl"];
   contentEditableDiv.style.writingMode = textDirection[dirIndex];
 
+  // body에 data-direction 속성 추가 (아이콘 회전용)
+  document.body.setAttribute('data-direction', dirIndex);
+
   if (textDirection[dirIndex] === "vertical-rl") {
     if (window.convertText) convertText(contentEditableDiv);
     contentEditableDiv.style.overflowY = "hidden";
@@ -169,13 +208,95 @@ function setTextDirection(dirIndex) {
 
 window.setTextDirection = setTextDirection;
 
+// 해상도별 스케일링 함수
+function applyResolutionScaling() {
+  if (!window.scaleSettings) {
+    console.log('scaleSettings not found');
+    return;
+  }
+  
+  const { scale, breakpoint } = window.scaleSettings;
+  const isHighResolution = window.innerWidth >= breakpoint;
+  const scaleValue = isHighResolution ? scale : 1;
+  
+  console.log(`Resolution: ${window.innerWidth}px, Breakpoint: ${breakpoint}px, Scale: ${scaleValue}`);
+  
+  const textEditor = document.getElementById('textEditor');
+  if (textEditor && window.initialSettings) {
+    // 폰트 크기 스케일링
+    const scaledFontSize = window.initialSettings.fontSize * scaleValue;
+    textEditor.style.fontSize = scaledFontSize + 'px';
+    
+    // 줄 간격은 스케일링하지 않음 (원래 값 유지)
+    textEditor.style.lineHeight = window.initialSettings.lineHeight;
+    
+    // range 조정 (스케일링된 값이 중간값이 되도록)
+    const targetFontSize = window.initialSettings.fontSize;
+    const fontSizeRange = { min: targetFontSize - 15, max: targetFontSize + 15 };
+    
+    const fontSizeSlider = document.querySelector('input[type="range"][oninput="changeFontSize(this.value)"]');
+    if (fontSizeSlider) {
+      fontSizeSlider.min = fontSizeRange.min;
+      fontSizeSlider.max = fontSizeRange.max;
+      fontSizeSlider.value = targetFontSize;
+    }
+  }
+  
+  // 글리프 padding-bottom 설정
+  const glyphDivs = document.querySelectorAll('.glyphs-characters div');
+  if (glyphDivs.length > 0 && window.initialSettings && window.initialSettings.glyphPaddingBottom !== undefined) {
+    glyphDivs.forEach(div => {
+      div.style.paddingBottom = window.initialSettings.glyphPaddingBottom + 'rem';
+      // ::before 가상 요소에도 padding-bottom 적용 (em 단위)
+      div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
+    });
+  }
+}
+
+// 윈도우 리사이즈 시 스케일링 재적용
+window.addEventListener('resize', applyResolutionScaling);
+
+// 페이지 로드 시 스케일링 적용
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    applyResolutionScaling();
+  }, 200);
+});
+
+// CSS 변수 설정 함수
+function setCSSScale() {
+  if (!window.scaleSettings) return;
+  
+  const { scale, breakpoint } = window.scaleSettings;
+  const isHighResolution = window.innerWidth >= breakpoint;
+  const scaleValue = isHighResolution ? scale : 1;
+  
+  // CSS 변수로 스케일 값 설정
+  document.documentElement.style.setProperty('--css-scale', scaleValue);
+}
+
+// CSS 스케일링 적용
+setCSSScale();
+window.addEventListener('resize', setCSSScale);
 
 
-let lastHeightValue = 1.5;
+
+let lastHeightValue = 2;
 
 function changeFontSize(sizeValue) {
   const editableDiv = document.getElementById("textEditor");
-  editableDiv.style.fontSize = sizeValue + "px";
+  
+  // 해상도별 스케일링 적용
+  if (window.scaleSettings) {
+    const { scale, breakpoint } = window.scaleSettings;
+    const isHighResolution = window.innerWidth >= breakpoint;
+    const scaleValue = isHighResolution ? scale : 1;
+    const scaledFontSize = sizeValue * scaleValue;
+    editableDiv.style.fontSize = scaledFontSize + "px";
+  } else {
+    editableDiv.style.fontSize = sizeValue + "px";
+  }
+  
   updateLineHeight(lastHeightValue);
 }
 

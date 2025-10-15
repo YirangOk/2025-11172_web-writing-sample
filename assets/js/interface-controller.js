@@ -59,4 +59,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 글리프 호버 이벤트는 addGlyphHoverEvents()에서 처리
 
+  // 폰트 선택 드롭다운 초기화
+  initializeFontSelect();
+
 });
+
+// 폰트 선택 드롭다운 초기화
+function initializeFontSelect() {
+  const fontSelect = document.getElementById('fontSelect');
+  if (!fontSelect) return;
+  
+  // 사용 가능한 폰트 목록
+  const fonts = [
+    { name: 'PyeonsanAA', displayName: '편산AA' },
+    { name: 'PyeonsanBB', displayName: '편산BB' },
+    { name: 'PyeonsanBetaAA', displayName: '편산베타AA' },
+    { name: 'PyeonsanBetaBB', displayName: '편산베타BB' }
+  ];
+  
+  // 옵션 추가
+  fonts.forEach(font => {
+    const option = document.createElement('option');
+    option.value = font.name;
+    option.textContent = font.displayName;
+    fontSelect.appendChild(option);
+  });
+}
+
+// 폰트 변경 함수
+function changeFont(fontName) {
+  if (!fontName) return;
+  
+  const textEditor = document.getElementById('textEditor');
+  if (textEditor) {
+    textEditor.style.fontFamily = fontName;
+  }
+}

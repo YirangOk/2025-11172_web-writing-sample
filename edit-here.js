@@ -32,9 +32,16 @@ const sampleText = `포스트스크립트(PostScript, PS)는 어도비 시스템
 // textDirectionSelect.value: 화면 로드시 세로쓰기를 먼저 마주하고싶을 때 '1' 작성
 const initialSettings = {
   textDirection: "0", // 0: 가로쓰기, 1: 세로쓰기
-  fontSize: 30,
-  letterSpacing: 0,
-  lineHeight: 1.5
+  fontSize: 30, // range: 15-45, 중간값: 30
+  letterSpacing: 0, // range: -100~100, 중간값: 0
+  lineHeight: 1.5, // range: 1.0~2.0, 중간값: 1.5
+  glyphPaddingBottom: 0.5 // 글리프 padding-bottom 설정 (rem 단위)
+};
+
+// 4. 해상도별 스케일링 설정
+const scaleSettings = {
+  scale: 3.5, // 2560px 이상에서 적용될 스케일 (JavaScript + CSS 공통)
+  breakpoint: 2560 // 적용될 해상도
 };
 
 // 4. 글리프 설정
@@ -64,4 +71,5 @@ const glyphs = {
 window.fonts = fonts;
 window.sampleText = sampleText;
 window.initialSettings = initialSettings;
+window.scaleSettings = scaleSettings;
 window.glyphs = glyphs;

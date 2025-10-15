@@ -33,7 +33,6 @@
 }
 
 .font-dots .dot .dot-label {
-  font-size: 0.875rem;
   white-space: nowrap;
 }
 
@@ -56,7 +55,6 @@
 }
 
 .toggle-dots .dot-label {
-  font-size: 0.875rem;
   white-space: nowrap;
 }
 
@@ -74,11 +72,6 @@
 }
 
 /* Overrides */
-
-#fontSelect {
-  height: 3rem;
-}
-
 * {
 }
 
@@ -138,23 +131,32 @@
   /* Dot sizes */
   --dot-size: 0.5rem;
   
-  /* 기본 크기 */
-  --font-size: 1rem; /* world font size (controlled by html) */
-  --basic-padding: 1rem;
-  --basic-margin: 0.5rem;
+  /* 반응형 크기 */
+  --font-size: clamp(14px, 1.3vw, 50px);
+  --basic-padding: clamp(0.5rem, 2vw, 2rem);
+  --basic-margin: clamp(0.25rem, 1vw, 1rem);
   --border: clamp(1px, 0.1vw, 2px);
-  --preview-height: 500px;
+  --text-editor-height: clamp(300px, 50vh, 2000px);
+  
   
   /* 스크롤바 */
   --scrollbar-xs: 6px;
   --scrollbar-sm: 8px;
   --scrollbar-lg: 12px;
+  
+  /* CSS 스케일링 */
+  --css-scale: 2;
 }
 
 
+  /* Text Editor */
+  #textEditor {
+    height: var(--text-editor-height);
+  }
 /* 스크롤바 */
 .scrollable,
   html {
+    font-size: var(--font-size);
     scrollbar-width: thin;
     scrollbar-color: var(--main-color) var(--sub-color);
   }
@@ -206,7 +208,6 @@ body {
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
-  font-size: var(--font-size);
   line-height: 1.65;
   word-break: keep-all;
   color: var(--main-color);
@@ -217,7 +218,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-}
   position: relative;
 }
 
@@ -239,7 +239,6 @@ body::selection {
 .functions {
   font-family: 'PyeonsanBetaAA', serif;
   display: flex;
-  width: calc(var(--font-size)*1.3);
   text-align: center;
   flex-direction: column;
   /* border-right: var(--border) solid;
@@ -318,7 +317,6 @@ h4,
 h5,
 h6 {
   
-  font-size: var(--font-size);
 }
 
 h2+h3 {
@@ -351,7 +349,6 @@ h2+h3 {
 }
 
 .context-container div .caption {
-  font-size: calc(var(--font-size) * 0.75);
 }
 
 
@@ -413,7 +410,6 @@ h2+h3 {
   height: 100%;
   gap: 0.5rem
 }
-
 .credit {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -423,12 +419,12 @@ h2+h3 {
 .glyphs-characters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  /* gap: 0.5rem; */
 }
 
 .glyphs-characters div {
   font-size: calc(var(--font-size) * 2.5);
-  height: calc(var(--font-size)*3.4);
+  height: calc(var(--font-size) * 3.4);
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
@@ -438,6 +434,7 @@ h2+h3 {
   user-select: none;
   position: relative;
   z-index: 1;
+  padding-bottom: 0;
   /* inherit selected preview font */
 }
 
@@ -466,7 +463,6 @@ h2+h3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 20vw;
   background-color: var(--sub-color);
   border: 1px solid var(--main-color);
   z-index: 9999;
@@ -476,12 +472,14 @@ h2+h3 {
   pointer-events: none;
   text-align: center;
   min-width: 30vw;
+  font-size: calc(var(--font-size) * 12);
   min-height: 30vh;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--main-color);
   font-family: inherit;
+  padding-bottom: calc(var(--glyph-padding-bottom, 0) * 0.3em);
 }
 
 .glyphs-characters div:hover::before {
@@ -491,7 +489,6 @@ h2+h3 {
 
 @media screen and (max-width: 768px) {
   .glyphs-characters div::before {
-    font-size: 15vw;
     min-width: 20vw;
     min-height: 20vh;
   }
@@ -529,6 +526,7 @@ h2+h3 {
 }
 
 .glyphs-title {
+  padding-top: 2rem;
 }
 
 /* Archive container */
@@ -586,7 +584,6 @@ h2+h3 {
   cursor: pointer;
   border: none;
   padding: var(--basic-padding);
-  font-size: calc(var(--font-size) * 1.5);
   overflow: hidden;
   background: none;
   color: var(--sub-color);
@@ -602,14 +599,12 @@ h2+h3 {
   top: 0rem;
   right: 2rem;
   color: var(--sub-color);
-  font-size: calc(var(--font-size) * 2);
   
   cursor: pointer;
 }
 
 #caption {
   color: var(--sub-color);
-  font-size: var(--font-size);
 }
 
 /* .grid-item:after{
@@ -662,6 +657,7 @@ h2+h3 {
   flex-direction: column;
   box-sizing: border-box;
   gap: 1rem;
+  /* padding: 0.5rem; */
   /* padding-bottom: 1rem; */
 }
 
@@ -683,7 +679,6 @@ h2+h3 {
 }
 
 .credit-content {
-  font-size: 0.8rem;
 }
 
 .controls-section {
@@ -706,10 +701,9 @@ h2+h3 {
   -webkit-appearance: none;
   -moz-appearance: none;
   display: flex;
-  max-height: var(--preview-height);
+  max-height: var(--text-editor-height);
   overflow: auto;
   background-color: var(--sub-color);
-  font-size: var(--font-size);
   line-height: calc(1.5 * 30px);
   outline: none;
   border: 1px solid var(--main-color);
@@ -720,11 +714,10 @@ h2+h3 {
 /* 세로쓰기일 때 크기 조정 */
 .font-preview div[contenteditable][style*="vertical-rl"] {
   width: 100%;
-  height: var(--preview-height);
+  height: var(--text-editor-height);
 }
 
 .credit a {
-  font-size: 10px;
   color: #ccc;
   text-decoration: none;
   text-align: right;
@@ -742,11 +735,13 @@ h2+h3 {
 }
 
 .control-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   width: min-content;
   text-align: left;
-  font-size: 15px;
   line-height: 1;
-  
+  white-space: nowrap;
 }
 
 #fristSection {
@@ -764,7 +759,6 @@ h2+h3 {
   background: var(--sub-color);
   border: 1px solid var(--main-color);
   border-radius: 0;
-  font-size: 16px;
   cursor: pointer;
   outline: none;
 }
@@ -822,6 +816,71 @@ h2+h3 {
   background: var(--sub-color);
 }
 
+.control-input select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--main-color);
+  background: var(--sub-color);
+  color: var(--main-color);
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+  height: 3em;
+}
+
+.control-input select:hover {
+  background: var(--main-color);
+  color: var(--sub-color);
+}
+
+.control-input select:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.font-select {
+  width: 15rem !important;
+  height: 2rem;
+}
+
+/* 아이콘 사이즈 조정 클래스들 */
+.icon-writing-direction {
+  width: 1rem;
+  height: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* 세로쓰기 선택 시 아이콘 회전 */
+body[data-direction="1"] .icon-writing-direction {
+  transform: rotate(90deg);
+}
+
+.icon-font-size {
+  width: 1rem;
+  height: 1.5rem;
+}
+
+.icon-letter-spacing {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon-line-height {
+  width: 1rem;
+  height: 1.5rem;
+}
+
+/* SVG 전역 스타일 */
+.cls-1 {
+  fill: var(--main-color);
+}
+
+.cls-2 {
+  fill: var(--main-color);
+}
+
 
 @media screen and (max-width: 1028px) {
   .controls-section {
@@ -850,5 +909,11 @@ h2+h3 {
   #fristSection {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .controls-section {
+    grid-template-columns: 1fr;
   }
 }
