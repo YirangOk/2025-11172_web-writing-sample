@@ -136,7 +136,7 @@
   --basic-padding: clamp(0.5rem, 2vw, 2rem);
   --basic-margin: clamp(0.25rem, 1vw, 1rem);
   --border: clamp(1px, 0.1vw, 2px);
-  --text-editor-height: clamp(300px, 30vh, 2000px);
+  --text-editor-height: clamp(400px, 50vh, 2000px);
   
   
   /* 스크롤바 */
