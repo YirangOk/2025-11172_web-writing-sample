@@ -92,6 +92,40 @@
   </div>
   </div>
 </body>
+<script>
+  (function () {
+    const PARENT_ORIGIN = '*'; // 가능하면 부모 도메인으로 제한하세요: 'https://yourdomain.com'
+
+    function postHeight() {
+      // 문서 유형에 따라 두 값 중 큰 값 사용(브라우저별 편차 대응)
+      const h1 = document.body ? document.body.scrollHeight : 0;
+      const h2 = document.documentElement ? document.documentElement.scrollHeight : 0;
+      const height = Math.max(h1, h2);
+      window.parent.postMessage({ type: 'IFRAME_HEIGHT', height }, PARENT_ORIGIN);
+    }
+
+    // 부모가 요청하면 응답
+    window.addEventListener('message', (event) => {
+      const data = event.data || {};
+      if (data.type === 'GET_IFRAME_HEIGHT') postHeight();
+    });
+
+    // 초기 로드/폰트 로딩/리사이즈/DOM 변경에 반응
+    window.addEventListener('load', postHeight);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(postHeight).catch(() => {});
+    }
+    window.addEventListener('resize', () => {
+      // 리사이즈시 약간 디바운스
+      clearTimeout(window.__rhTo);
+      window.__rhTo = setTimeout(postHeight, 100);
+    });
+
+    // DOM 구조 변화에도 반응
+    const ro = new ResizeObserver(() => postHeight());
+    ro.observe(document.documentElement);
+  })();
+</script>
 <script src="edit-here.js" defer></script>
 <script src="assets/js/font-loader.js" defer></script>
 <script src="assets/js/glyph-converter.js" defer></script>
