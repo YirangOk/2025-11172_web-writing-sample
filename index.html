@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
@@ -20,8 +21,7 @@
             <!-- <div class="control-label">폰트 선택</div> -->
             <div class="control-input">
               <select id="fontSelect" class="font-select" onchange="changeFont(this.value)">
-                <option value="">
-                  폰트를 선택하세요</option>
+                <option value="">폰트를 선택하세요</option>
               </select>
             </div>
           </div>
@@ -29,12 +29,14 @@
       <div class="controls-section noto-sans">
         <div class="writing-mode-control">
           <div class="control-label">
-            <svg class="icon-writing-direction" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74.83 65.71">
-            <rect class="cls-1" width="53.83" height="8.3"/>
-            <rect class="cls-1" y="19.13" width="74.83" height="8.3"/>
-            <rect class="cls-1" y="38.27" width="74.83" height="8.3"/>
-            <rect class="cls-1" y="57.4" width="74.83" height="8.3"/>
-          </svg>쓰기 방향</div>
+            <div class="icon-wrapper">
+              <svg class="icon-writing-direction" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74.83 65.71">
+              <rect class="cls-1" width="53.83" height="8.3"/>
+              <rect class="cls-1" y="19.13" width="74.83" height="8.3"/>
+              <rect class="cls-1" y="38.27" width="74.83" height="8.3"/>
+              <rect class="cls-1" y="57.4" width="74.83" height="8.3"/>
+            </svg>
+            </div>쓰기 방향</div>
           <div class="control-input">
             <div class="toggle-dots" role="tablist" aria-label="텍스트 방향">
               <button type="button" class="dot active" aria-pressed="true" data-dir="0" onclick="setTextDirection(0)"></button>
@@ -46,33 +48,39 @@
         </div>
         <div class="font-size-control">
           <div class="control-label">
-            <svg class="icon-font-size" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90.19 80.71">
-              <path class="cls-1" d="M23.65,10.73H0V0h60.12v10.73h-23.76v69.98h-12.7V10.73Z"/>
-              <polygon class="cls-1" points="51.63 29.98 51.63 39.33 65.62 39.33 65.62 80.71 76.13 80.71 76.13 39.33 90.19 39.33 90.19 29.98 51.63 29.98"/>
-            </svg>글자 크기</div>
+            <div class="icon-wrapper">
+              <svg class="icon-font-size" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90.19 80.71">
+                <path class="cls-1" d="M23.65,10.73H0V0h60.12v10.73h-23.76v69.98h-12.7V10.73Z"/>
+                <polygon class="cls-1" points="51.63 29.98 51.63 39.33 65.62 39.33 65.62 80.71 76.13 80.71 76.13 39.33 90.19 39.33 90.19 29.98 51.63 29.98"/>
+              </svg>
+            </div>글자 크기</div>
           <div class="control-input">
             <input type="range" min="15" max="45" value="30" step="1" oninput="changeFontSize(this.value)">
           </div>
         </div>
         <div class="letter-spacing-control">
           <div class="control-label">
-            <svg class="icon-letter-spacing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.98 55.55">
-              <path class="cls-1" d="M35.91,0l-7.2,27.06c-1.72,6.15-2.92,11.69-4.72,17.92h-.37c-1.72-6.22-2.92-11.77-4.65-17.92L11.62,0H0l16.94,55.55h13.27L47.16,0h-11.25Z"/>
-              <polygon class="cls-1" points="55.7 0 41.7 55.55 48.62 55.55 62.56 0 55.7 0"/>
-              <path class="cls-1" d="M88.14,0h-13.04l-17.77,55.55h11.25l3.9-14.24h17.99l3.9,14.24h11.62L88.14,0ZM74.87,32.69l1.65-6.07c1.65-5.77,3.3-12.07,4.72-18.14h.38c1.57,6,3.07,12.37,4.8,18.14l1.65,6.07h-13.19Z"/>
-            </svg>글자 사이</div>
+            <div class="icon-wrapper">
+              <svg class="icon-letter-spacing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.98 55.55">
+                <path class="cls-1" d="M35.91,0l-7.2,27.06c-1.72,6.15-2.92,11.69-4.72,17.92h-.37c-1.72-6.22-2.92-11.77-4.65-17.92L11.62,0H0l16.94,55.55h13.27L47.16,0h-11.25Z"/>
+                <polygon class="cls-1" points="55.7 0 41.7 55.55 48.62 55.55 62.56 0 55.7 0"/>
+                <path class="cls-1" d="M88.14,0h-13.04l-17.77,55.55h11.25l3.9-14.24h17.99l3.9,14.24h11.62L88.14,0ZM74.87,32.69l1.65-6.07c1.65-5.77,3.3-12.07,4.72-18.14h.38c1.57,6,3.07,12.37,4.8,18.14l1.65,6.07h-13.19Z"/>
+              </svg>
+            </div>글자 사이</div>
           <div class="control-input">
             <input type="range" min="-100" max="100" value="0" step="10" oninput="showValueLetter(this.value)">
           </div>
         </div>
         <div class="line-height-control">
           <div class="control-label">
-<svg class="icon-line-height" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.3 84.16">
-  <rect class="cls-1" x="31.47" y="9.29" width="53.83" height="10.16"/>
-  <rect class="cls-1" x="31.47" y="37.52" width="53.83" height="10.16"/>
-  <rect class="cls-1" x="31.47" y="65.76" width="53.83" height="10.16"/>
-  <path class="cls-2" d="M19.03,19.56c.26.26.61.4.97.4.18,0,.36-.03.53-.1.51-.21.85-.71.85-1.27v-7.91c0-.36-.14-.71-.4-.97L11.66.4c-.54-.54-1.41-.54-1.94,0L.4,9.71c-.26.26-.4.61-.4.97v7.91c0,.56.34,1.06.85,1.27.51.21,1.1.1,1.5-.3l4.22-4.22v53.48l-4.22-4.22c-.39-.39-.98-.5-1.5-.3-.51.21-.85.71-.85,1.27v7.91c0,.36.14.71.4.97l9.31,9.31c.27.27.62.4.97.4s.7-.13.97-.4l9.31-9.31c.26-.26.4-.61.4-.97v-7.91c0-.56-.34-1.06-.85-1.27-.51-.21-1.11-.09-1.5.3l-4.22,4.22V15.34l4.22,4.22Z"/>
-</svg>글줄 사이</div>
+            <div class="icon-wrapper">
+              <svg class="icon-line-height" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.3 84.16">
+                <rect class="cls-1" x="31.47" y="9.29" width="53.83" height="10.16"/>
+                <rect class="cls-1" x="31.47" y="37.52" width="53.83" height="10.16"/>
+                <rect class="cls-1" x="31.47" y="65.76" width="53.83" height="10.16"/>
+                <path class="cls-2" d="M19.03,19.56c.26.26.61.4.97.4.18,0,.36-.03.53-.1.51-.21.85-.71.85-1.27v-7.91c0-.36-.14-.71-.4-.97L11.66.4c-.54-.54-1.41-.54-1.94,0L.4,9.71c-.26.26-.4.61-.4.97v7.91c0,.56.34,1.06.85,1.27.51.21,1.1.1,1.5-.3l4.22-4.22v53.48l-4.22-4.22c-.39-.39-.98-.5-1.5-.3-.51.21-.85.71-.85,1.27v7.91c0,.36.14.71.4.97l9.31,9.31c.27.27.62.4.97.4s.7-.13.97-.4l9.31-9.31c.26-.26.4-.61.4-.97v-7.91c0-.56-.34-1.06-.85-1.27-.51-.21-1.11-.09-1.5.3l-4.22,4.22V15.34l4.22,4.22Z"/>
+              </svg>
+            </div>글줄 사이</div>
           <div class="control-input">
             <input type="range" min="1" max="2.0" value="1.5" step="0.1" oninput="showValueHeight(this.value)">
           </div>
@@ -83,49 +91,24 @@
   </div>
 
   <div class="glyph-container">
-    <div class="glyphs">
-      <div class="glyphs-cover">
+      <div class="glyphs">
+        <div class="glyphs-cover">
+          <div class="glyphs-title">
+            글리프 보기
+          </div>
+          <div class="preview"><span>글리프를 선택하세요</span></div>
+        </div>
+        <div class="glyphs-contents">
+          <div class="slide-navigation">
+            <button class="slide-btn prev-btn" id="prevBtn">‹</button>
+            <button class="slide-btn next-btn" id="nextBtn">›</button>
+          </div>
+        </div>
       </div>
-      <div class="glyphs-content">
-      </div>
-    </div>
   </div>
   </div>
 </body>
-<script>
-  (function () {
-    const PARENT_ORIGIN = '*'; // 가능하면 부모 도메인으로 제한하세요: 'https://yourdomain.com'
-
-    function postHeight() {
-      // 문서 유형에 따라 두 값 중 큰 값 사용(브라우저별 편차 대응)
-      const h1 = document.body ? document.body.scrollHeight : 0;
-      const h2 = document.documentElement ? document.documentElement.scrollHeight : 0;
-      const height = Math.max(h1, h2);
-      window.parent.postMessage({ type: 'IFRAME_HEIGHT', height }, PARENT_ORIGIN);
-    }
-
-    // 부모가 요청하면 응답
-    window.addEventListener('message', (event) => {
-      const data = event.data || {};
-      if (data.type === 'GET_IFRAME_HEIGHT') postHeight();
-    });
-
-    // 초기 로드/폰트 로딩/리사이즈/DOM 변경에 반응
-    window.addEventListener('load', postHeight);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(postHeight).catch(() => {});
-    }
-    window.addEventListener('resize', () => {
-      // 리사이즈시 약간 디바운스
-      clearTimeout(window.__rhTo);
-      window.__rhTo = setTimeout(postHeight, 100);
-    });
-
-    // DOM 구조 변화에도 반응
-    const ro = new ResizeObserver(() => postHeight());
-    ro.observe(document.documentElement);
-  })();
-</script>
+<script src="assets/js/main.js" defer></script>
 <script src="edit-here.js" defer></script>
 <script src="assets/js/font-loader.js" defer></script>
 <script src="assets/js/glyph-converter.js" defer></script>

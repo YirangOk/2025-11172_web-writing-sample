@@ -8,19 +8,19 @@
 // url: 폰트 파일의 경로 (assets/fonts/ 폴더 기준)
 const fonts = [
   {
-    name: "편산 Beta A",
+    name: "A",
     url: "assets/fonts/PyeonsanBetaAA-Regular.otf",
   },
   {
-    name: "편산 Beta B", 
+    name: "B", 
     url: "assets/fonts/PyeonsanBetaBB-Regular.otf",
   },
   {
-    name: "편산 A",
+    name: "1A",
     url: "assets/fonts/PyeonsanBetaAA_0-Regular.otf",
   },
   {
-    name: "편산 B",
+    name: "2B",
     url: "assets/fonts/PyeonsanBetaBB_0-Regular.otf",
   }
 ];

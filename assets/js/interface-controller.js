@@ -1,5 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-
+// 폰트 로딩 완료 후 초기화
+function initializeInterfaceController() {
+  console.log('Initializing interface controller after fonts loaded');
+  
   /* 글리프 동적 생성 ------------------------------------------------ */
   function generateGlyphs() {
     if (!window.glyphs) return;
@@ -61,28 +63,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 폰트 선택 드롭다운 초기화
   initializeFontSelect();
+}
 
-});
+// 폰트 로딩 대기
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => {
+    console.log('Fonts ready for interface controller');
+    initializeInterfaceController();
+  }).catch((error) => {
+    console.error('Font loading error in interface controller:', error);
+    initializeInterfaceController();
+  });
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded for interface controller (fonts API not supported)');
+    initializeInterfaceController();
+  });
+}
+
+// 전역 함수로 등록
+window.changeFont = changeFont;
 
 // 폰트 선택 드롭다운 초기화
 function initializeFontSelect() {
   const fontSelect = document.getElementById('fontSelect');
-  if (!fontSelect) return;
+  if (!fontSelect || !window.fonts) {
+    console.log('fontSelect or window.fonts not found');
+    return;
+  }
   
-  // 사용 가능한 폰트 목록
-  const fonts = [
-    { name: 'PyeonsanAA', displayName: '편산AA' },
-    { name: 'PyeonsanBB', displayName: '편산BB' },
-    { name: 'PyeonsanBetaAA', displayName: '편산베타AA' },
-    { name: 'PyeonsanBetaBB', displayName: '편산베타BB' }
-  ];
+  console.log('Initializing font select with window.fonts:', window.fonts);
   
-  // 옵션 추가
-  fonts.forEach(font => {
+  // 기존 옵션들 제거 (첫 번째 기본 옵션 제외)
+  while (fontSelect.children.length > 1) {
+    fontSelect.removeChild(fontSelect.lastChild);
+  }
+  
+  // window.fonts에서 폰트 옵션 생성
+  window.fonts.forEach(font => {
     const option = document.createElement('option');
     option.value = font.name;
-    option.textContent = font.displayName;
+    option.textContent = font.name;
     fontSelect.appendChild(option);
+    console.log('Added font option:', font.name);
   });
 }
 
@@ -90,8 +113,34 @@ function initializeFontSelect() {
 function changeFont(fontName) {
   if (!fontName) return;
   
+  console.log('changeFont called with:', fontName);
+  
+  // window.fonts에서 해당 폰트 찾기
+  const selectedFont = window.fonts ? window.fonts.find(font => font.name === fontName) : null;
+  if (!selectedFont) {
+    console.error('Font not found:', fontName);
+    return;
+  }
+  
+  console.log('Using font:', selectedFont);
+  
   const textEditor = document.getElementById('textEditor');
   if (textEditor) {
-    textEditor.style.fontFamily = fontName;
+    textEditor.style.fontFamily = `'${fontName}', sans-serif`;
+    console.log('Applied font to textEditor:', fontName);
+  }
+  
+  // 글리프들에도 폰트 적용
+  const glyphElements = document.querySelectorAll('.glyphs-characters div span');
+  glyphElements.forEach(span => {
+    span.style.fontFamily = `'${fontName}', sans-serif`;
+  });
+  console.log('Applied font to glyphs:', fontName);
+  
+  // 미리보기에도 폰트 적용
+  const previewBox = document.querySelector('.preview span');
+  if (previewBox) {
+    previewBox.style.fontFamily = `'${fontName}', sans-serif`;
+    console.log('Applied font to preview:', fontName);
   }
 }
