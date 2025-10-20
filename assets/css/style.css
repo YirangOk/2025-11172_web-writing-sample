@@ -399,6 +399,7 @@ body::selection {
 .glyphs-characters {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 0.5px;
   /* justify-content: center; */
 }
 
@@ -511,7 +512,7 @@ body::selection {
   align-items: center;
   gap: 0.5rem;
   min-height: 40px;
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
 }
 
 .font-preview div[contenteditable] {
