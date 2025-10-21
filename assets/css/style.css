@@ -400,8 +400,8 @@ body::selection {
 .glyphs-characters {
   display: flex;
   flex-wrap: wrap;
-  /* margin-left: 0.5px; */
-  /* justify-content: center; */
+  margin-left: 0.5px;
+  justify-content: center;
 }
 
 .glyphs-characters div {
