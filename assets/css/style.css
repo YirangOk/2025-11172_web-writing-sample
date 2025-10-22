@@ -688,8 +688,12 @@ body::selection {
 }
 
 /* 세로쓰기 선택 시 아이콘 회전 */
-body[data-direction="1"] .icon-writing-direction {
+body[data-direction="1"] .writing-mode-control .icon-wrapper svg {
   transform: rotate(90deg);
+}
+
+.writing-mode-control .icon-wrapper svg {
+  transition: transform 0.3s ease;
 }
 
 .icon-font-size {
