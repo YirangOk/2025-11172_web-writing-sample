@@ -30,12 +30,12 @@
         <div class="writing-mode-control">
           <div class="control-label">
             <div class="icon-wrapper">
-              <svg class="icon-writing-direction" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74.83 65.71">
-              <rect class="cls-1" width="53.83" height="8.3"/>
-              <rect class="cls-1" y="19.13" width="74.83" height="8.3"/>
-              <rect class="cls-1" y="38.27" width="74.83" height="8.3"/>
-              <rect class="cls-1" y="57.4" width="74.83" height="8.3"/>
-            </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.42 109.43">
+                  <rect class="cls-1" x="19.48" y="26.16" width="70.47" height="4.8"/>
+                  <rect class="cls-1" x="19.48" y="78.47" width="50.85" height="4.8"/>
+                  <rect class="cls-1" x="19.48" y="52.31" width="70.47" height="4.8"/>
+                  <path class="cls-1" d="M109.42,109.43H0V0h109.42v109.43ZM4.8,104.62h99.83V4.8H4.8v99.82Z"/>
+                </svg>
             </div>쓰기 방향</div>
           <div class="control-input">
             <div class="toggle-dots" role="tablist" aria-label="텍스트 방향">
@@ -49,10 +49,12 @@
         <div class="font-size-control">
           <div class="control-label">
             <div class="icon-wrapper">
-              <svg class="icon-font-size" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90.19 80.71">
-                <path class="cls-1" d="M23.65,10.73H0V0h60.12v10.73h-23.76v69.98h-12.7V10.73Z"/>
-                <polygon class="cls-1" points="51.63 29.98 51.63 39.33 65.62 39.33 65.62 80.71 76.13 80.71 76.13 39.33 90.19 39.33 90.19 29.98 51.63 29.98"/>
-              </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.42 109.43">
+                  <polygon class="cls-1" points="19.48 26.16 19.48 30.96 40.7 30.96 40.7 80.87 45.49 80.87 45.49 30.96 66.71 30.96 66.71 26.16 19.48 26.16"/>
+                  <rect class="cls-1" x="59.93" y="52.31" width="30.02" height="4.8"/>
+                  <rect class="cls-1" x="72.54" y="54.71" width="4.8" height="26.16"/>
+                  <path class="cls-1" d="M109.42,109.43H0V0h109.42v109.43ZM4.8,104.62h99.83V4.8H4.8v99.82Z"/>
+                </svg>
             </div>글자 크기</div>
           <div class="control-input">
             <input type="range" min="15" max="45" value="30" step="1" oninput="changeFontSize(this.value)">
@@ -61,11 +63,11 @@
         <div class="letter-spacing-control">
           <div class="control-label">
             <div class="icon-wrapper">
-              <svg class="icon-letter-spacing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.98 55.55">
-                <path class="cls-1" d="M35.91,0l-7.2,27.06c-1.72,6.15-2.92,11.69-4.72,17.92h-.37c-1.72-6.22-2.92-11.77-4.65-17.92L11.62,0H0l16.94,55.55h13.27L47.16,0h-11.25Z"/>
-                <polygon class="cls-1" points="55.7 0 41.7 55.55 48.62 55.55 62.56 0 55.7 0"/>
-                <path class="cls-1" d="M88.14,0h-13.04l-17.77,55.55h11.25l3.9-14.24h17.99l3.9,14.24h11.62L88.14,0ZM74.87,32.69l1.65-6.07c1.65-5.77,3.3-12.07,4.72-18.14h.38c1.57,6,3.07,12.37,4.8,18.14l1.65,6.07h-13.19Z"/>
-              </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.42 109.43">s
+                  <path class="cls-1" d="M109.42,109.43H0V0h109.42v109.43ZM4.8,104.62h99.83V4.8H4.8v99.82Z"/>
+                  <polygon class="cls-1" points="55.39 26.16 50.26 26.16 36.31 74.03 22.35 26.16 17.23 26.16 33.75 80.87 38.87 80.87 55.39 26.16"/>
+                  <path class="cls-1" d="M87.07,80.87h5.12l-16.52-54.71h-5.13l-16.51,54.71h5.12l5.02-17.22h17.87l5.02,17.22ZM65.58,58.85l7.54-25.86,7.54,25.86h-15.07Z"/>
+                </svg>
             </div>글자 사이</div>
           <div class="control-input">
             <input type="range" min="-100" max="100" value="0" step="10" oninput="showValueLetter(this.value)">
@@ -74,11 +76,12 @@
         <div class="line-height-control">
           <div class="control-label">
             <div class="icon-wrapper">
-              <svg class="icon-line-height" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.3 84.16">
-                <rect class="cls-1" x="31.47" y="9.29" width="53.83" height="10.16"/>
-                <rect class="cls-1" x="31.47" y="37.52" width="53.83" height="10.16"/>
-                <rect class="cls-1" x="31.47" y="65.76" width="53.83" height="10.16"/>
-                <path class="cls-2" d="M19.03,19.56c.26.26.61.4.97.4.18,0,.36-.03.53-.1.51-.21.85-.71.85-1.27v-7.91c0-.36-.14-.71-.4-.97L11.66.4c-.54-.54-1.41-.54-1.94,0L.4,9.71c-.26.26-.4.61-.4.97v7.91c0,.56.34,1.06.85,1.27.51.21,1.1.1,1.5-.3l4.22-4.22v53.48l-4.22-4.22c-.39-.39-.98-.5-1.5-.3-.51.21-.85.71-.85,1.27v7.91c0,.36.14.71.4.97l9.31,9.31c.27.27.62.4.97.4s.7-.13.97-.4l9.31-9.31c.26-.26.4-.61.4-.97v-7.91c0-.56-.34-1.06-.85-1.27-.51-.21-1.11-.09-1.5.3l-4.22,4.22V15.34l4.22,4.22Z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.42 109.43">
+                <path class="cls-1" d="M109.42,109.43H0V0h109.42v109.43ZM4.8,104.62h99.83V4.8H4.8v99.82Z"/>
+                <rect class="cls-1" x="58.71" y="52.31" width="31.23" height="4.8"/>
+                <rect class="cls-1" x="58.71" y="26.16" width="31.23" height="4.8"/>
+                <rect class="cls-1" x="58.71" y="78.47" width="31.23" height="4.8"/>
+                <polygon class="cls-1" points="47.33 46.72 47.33 39.94 32.56 25.16 17.78 39.94 17.78 46.72 30.16 34.35 30.16 75.08 17.78 62.7 17.78 69.49 32.56 84.26 47.33 69.49 47.33 62.7 34.95 75.08 34.95 34.35 47.33 46.72"/>
               </svg>
             </div>글줄 사이</div>
           <div class="control-input">
@@ -100,8 +103,18 @@
         </div>
         <div class="glyphs-contents">
           <div class="slide-navigation">
-            <button class="slide-btn prev-btn" id="prevBtn">‹</button>
-            <button class="slide-btn next-btn" id="nextBtn">›</button>
+            <button class="slide-btn prev-btn" id="prevBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.42 109.43">
+                <path class="cls-1" d="M109.42,109.43H0V0h109.42v109.43ZM4.8,104.62h99.83V4.8H4.8v99.82Z"/>
+                <polygon class="cls-1" points="39.34 54.71 67.9 26.16 61.12 26.16 32.56 54.71 61.11 83.27 67.9 83.27 39.34 54.71"/>
+              </svg>
+            </button>
+            <button class="slide-btn next-btn" id="nextBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.42 109.43">
+                <path class="cls-1" d="M0,0h109.42v109.43H0V0ZM104.63,4.8H4.8s0,99.82,0,99.82h99.83s0-99.82,0-99.82Z"/>
+                <polygon class="cls-1" points="70.08 54.71 41.53 26.16 48.31 26.16 76.87 54.71 48.32 83.27 41.53 83.27 70.08 54.71"/>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
