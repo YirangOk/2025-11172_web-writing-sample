@@ -25,7 +25,26 @@
     // 문서 유형에 따라 두 값 중 큰 값 사용(브라우저별 편차 대응)
     const h1 = document.body ? document.body.scrollHeight : 0;
     const h2 = document.documentElement ? document.documentElement.scrollHeight : 0;
-    const height = Math.max(h1, h2);
+    const h3 = document.documentElement ? document.documentElement.clientHeight : 0;
+    
+    // 스케일링이 적용된 경우를 고려하여 최대 높이 제한
+    const rawHeight = Math.max(h1, h2);
+    const maxHeight = Math.min(rawHeight, window.innerHeight * 2); // 최대 2배 높이로 제한
+    
+    // 스케일링이 적용된 경우 원래 높이로 복원
+    let height = rawHeight;
+    if (window.scaleSettings && window.scaleSettings.scale > 1) {
+      const { scale, breakpoint } = window.scaleSettings;
+      const isHighResolution = window.innerWidth >= breakpoint;
+      if (isHighResolution) {
+        height = rawHeight / scale; // 스케일링 역산
+      }
+    }
+    
+    // 최대 높이 제한 적용
+    height = Math.min(height, maxHeight);
+    
+    console.log('Height calculation:', { h1, h2, h3, rawHeight, maxHeight, finalHeight: height });
     window.parent.postMessage({ type: 'IFRAME_HEIGHT', height }, PARENT_ORIGIN);
   }
 

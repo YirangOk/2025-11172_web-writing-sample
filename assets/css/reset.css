@@ -210,26 +210,60 @@ button, input, select, textarea {
 
 /* Safari/iOS 전용 스타일 */
 @supports (-webkit-touch-callout: none) {
-  /* Safari에서 SVG 색상 고정 */
-  .cls-1,
-  .cls-2 {
-    fill: var(--main-color) !important;
-    color: var(--main-color) !important;
-    -webkit-appearance: none;
-  }
-  
-  /* SVG 컨테이너 색상 전파 */
+  /* Safari에서 SVG 강제 표시 */
   .icon-wrapper {
-    color: var(--main-color) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    min-width: 1.5rem !important;
+    min-height: 1.5rem !important;
   }
   
-  /* Safari에서 SVG 렌더링 최적화 */
+  /* Safari에서 SVG 렌더링 강제 적용 */
   svg {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 1rem !important;
+    min-height: 1rem !important;
+    max-width: 1.5rem !important;
+    max-height: 1.5rem !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    color: inherit;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+  
+  /* 모든 SVG 하위 요소 강제 표시 */
+  svg *,
+  svg rect,
+  svg path,
+  svg polygon,
+  svg circle,
+  svg ellipse,
+  svg line,
+  svg polyline {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* 클래스별 강제 적용 */
+  .cls-1,
+  .cls-2,
+  svg .cls-1,
+  svg .cls-2 {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* Safari 터치 이벤트 최적화 */
