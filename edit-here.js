@@ -115,21 +115,10 @@ const glyphs = {
 };
 
 // ===========================================
-// 5. 해상도별 스케일링 설정 (scaleSettings)
+// 5. 해상도별 스케일링 설정 (scaleSettings) - 사용하지 않음
 // ===========================================
-// 큰 화면에서 폰트가 너무 작아 보이지 않도록 확대하는 설정입니다
-// 
-// 📝 설정값 설명:
-// - scale: 확대 비율 (숫자가 클수록 더 크게 확대됨)
-// - breakpoint: 이 해상도 이상에서 확대 적용 (픽셀 단위)
-//
-// 💡 예시:
-// - 2560px 이상의 화면에서 3.5배 확대
-// - 4K 모니터나 큰 화면에서 폰트가 잘 보이도록 도와줍니다
-const scaleSettings = {
-  scale: 1, // 모바일에서는 확대하지 않음
-  breakpoint: 2560 // 적용될 해상도 (픽셀)
-};
+// 해상도별 스케일링은 CSS와 JavaScript에서 직접 처리됩니다.
+// 이 설정은 더 이상 사용되지 않습니다.
 
 // ===========================================
 // 6. 전역 변수로 내보내기
@@ -142,5 +131,4 @@ const scaleSettings = {
 window.fonts = fonts;
 window.sampleText = sampleText;
 window.initialSettings = initialSettings;
-window.scaleSettings = scaleSettings;
 window.glyphs = glyphs;

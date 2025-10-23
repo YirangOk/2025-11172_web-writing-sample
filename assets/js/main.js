@@ -17,6 +17,9 @@
       textEditor.style.maxWidth = '100%';
       textEditor.style.minWidth = '100%';
       textEditor.style.boxSizing = 'border-box';
+      textEditor.style.margin = '0';
+      textEditor.style.padding = '1rem';
+      textEditor.style.overflow = 'auto';
     }
   }
 
@@ -56,13 +59,38 @@
 
 
   // 글리프 로드 및 표시
-  function loadGlyphs() {
+  function loadGlyphs(retryCount = 0) {
+    const maxRetries = 10;
     const glyphsContainer = document.querySelector('.glyphs-contents');
     const previewBox = document.querySelector('.preview span');
     
-    console.log('loadGlyphs called');
+    console.log('loadGlyphs called, retry count:', retryCount);
     console.log('window.glyphs:', window.glyphs);
     console.log('glyphsContainer:', glyphsContainer);
+    
+    // 최대 재시도 횟수 초과 시 중단
+    if (retryCount >= maxRetries) {
+      console.error('Maximum retry count reached for loadGlyphs');
+      return;
+    }
+    
+    // glyphsContainer가 없으면 재시도
+    if (!glyphsContainer) {
+      console.log('glyphsContainer not found, retrying...');
+      setTimeout(() => {
+        loadGlyphs(retryCount + 1);
+      }, 100);
+      return;
+    }
+    
+    // window.glyphs가 없으면 재시도
+    if (!window.glyphs) {
+      console.log('window.glyphs not found, retrying...');
+      setTimeout(() => {
+        loadGlyphs(retryCount + 1);
+      }, 100);
+      return;
+    }
     
     if (window.glyphs && glyphsContainer) {
       // 각 분류별로 섹션 생성
@@ -85,6 +113,13 @@
         section.characters.forEach(glyph => {
           const div = document.createElement('div');
           div.innerHTML = `<span>${glyph}</span>`;
+          
+          // 초기 padding-bottom 적용
+          if (window.initialSettings && window.initialSettings.glyphPaddingBottom !== undefined) {
+            div.style.paddingBottom = window.initialSettings.glyphPaddingBottom + 'rem';
+            div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
+          }
+          
           div.addEventListener('click', () => {
             if (previewBox) {
               previewBox.textContent = glyph;
@@ -107,7 +142,7 @@
       // 슬라이드 정보 업데이트
       updateSlideInfo();
       
-      // 글리프 padding-bottom 적용
+      // 글리프 padding-bottom 적용 (이미 생성 시 적용되었지만 재확인)
       applyGlyphPaddingBottom();
     }
   }
@@ -170,6 +205,7 @@
           // ::before 가상 요소에도 padding-bottom 적용 (em 단위)
           div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
         });
+        console.log('Applied glyphPaddingBottom:', window.initialSettings.glyphPaddingBottom + 'rem');
       }
     }
   }
@@ -178,6 +214,7 @@
   window.slideLeft = slideLeft;
   window.slideRight = slideRight;
   window.applyGlyphPaddingBottom = applyGlyphPaddingBottom;
+  window.loadGlyphs = loadGlyphs;
 
   // 폰트 변경 감지
   function setupFontChangeListener() {
@@ -215,6 +252,11 @@
     setupFontChangeListener();
     setupSlideListeners();
     postHeight();
+    
+    // interface-controller 초기화
+    if (window.initializeInterfaceController) {
+      window.initializeInterfaceController();
+    }
   }
 
   // 폰트 로딩 대기
@@ -234,6 +276,16 @@
       initializeAfterFontsLoaded();
     });
   }
+  
+  // DOM이 완전히 로드된 후에도 글리프 로딩 재시도
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (window.glyphs && document.querySelector('.glyphs-contents')) {
+        console.log('DOM loaded, ensuring glyphs are loaded');
+        loadGlyphs();
+      }
+    }, 500);
+  });
   window.addEventListener('resize', () => {
     // 리사이즈시 약간 디바운스
     clearTimeout(window.__rhTo);

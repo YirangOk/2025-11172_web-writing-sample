@@ -114,10 +114,17 @@ document.addEventListener('DOMContentLoaded', function() {
         applyResolutionScaling();
       }, 100);
       
-      // 글리프 padding-bottom 초기 적용
+      // 글리프 padding-bottom 초기 적용 (즉시 적용)
+      if (window.applyGlyphPaddingBottom) {
+        window.applyGlyphPaddingBottom();
+      }
+      
+      // 글리프 로딩 보장
       setTimeout(() => {
-        applyGlyphPaddingBottom();
-      }, 200);
+        if (window.loadGlyphs) {
+          window.loadGlyphs();
+        }
+      }, 300);
     }
   }
 
@@ -215,36 +222,40 @@ window.setTextDirection = setTextDirection;
 
 // 해상도별 스케일링 함수
 function applyResolutionScaling() {
-  if (!window.scaleSettings) {
-    console.log('scaleSettings not found');
+  const textEditor = document.getElementById('textEditor');
+  if (!textEditor || !window.initialSettings) {
     return;
   }
   
-  const { scale, breakpoint } = window.scaleSettings;
-  const isHighResolution = window.innerWidth >= breakpoint;
-  const scaleValue = isHighResolution ? scale : 1;
+  // 2560px 이상에서 3.5배 스케일링
+  const is2560Plus = window.innerWidth >= 2560;
+  const is1720Plus = window.innerWidth > 1720;
   
-  console.log(`Resolution: ${window.innerWidth}px, Breakpoint: ${breakpoint}px, Scale: ${scaleValue}`);
+  let scaleValue = 1;
+  if (is2560Plus) {
+    scaleValue = 3.5;
+  } else if (is1720Plus) {
+    scaleValue = 1.5;
+  }
   
-  const textEditor = document.getElementById('textEditor');
-  if (textEditor && window.initialSettings) {
-    // 폰트 크기 스케일링
-    const scaledFontSize = window.initialSettings.fontSize * scaleValue;
-    textEditor.style.fontSize = scaledFontSize + 'px';
-    
-    // 줄 간격은 스케일링하지 않음 (원래 값 유지)
-    textEditor.style.lineHeight = window.initialSettings.lineHeight;
-    
-    // range 조정 (스케일링된 값이 중간값이 되도록)
-    const targetFontSize = window.initialSettings.fontSize;
-    const fontSizeRange = { min: targetFontSize - 15, max: targetFontSize + 15 };
-    
-    const fontSizeSlider = document.querySelector('input[type="range"][oninput="changeFontSize(this.value)"]');
-    if (fontSizeSlider) {
-      fontSizeSlider.min = fontSizeRange.min;
-      fontSizeSlider.max = fontSizeRange.max;
-      fontSizeSlider.value = targetFontSize;
-    }
+  console.log(`Resolution: ${window.innerWidth}px, Scale: ${scaleValue}`);
+  
+  // 폰트 크기 스케일링
+  const scaledFontSize = window.initialSettings.fontSize * scaleValue;
+  textEditor.style.fontSize = scaledFontSize + 'px';
+  
+  // 줄 간격은 스케일링하지 않음 (원래 값 유지)
+  textEditor.style.lineHeight = window.initialSettings.lineHeight;
+  
+  // range 조정 (스케일링된 값이 중간값이 되도록)
+  const targetFontSize = window.initialSettings.fontSize;
+  const fontSizeRange = { min: targetFontSize - 15, max: targetFontSize + 15 };
+  
+  const fontSizeSlider = document.querySelector('input[type="range"][oninput="changeFontSize(this.value)"]');
+  if (fontSizeSlider) {
+    fontSizeSlider.min = fontSizeRange.min;
+    fontSizeSlider.max = fontSizeRange.max;
+    fontSizeSlider.value = targetFontSize;
   }
   
   // 글리프 padding-bottom 설정
@@ -258,29 +269,12 @@ function applyResolutionScaling() {
   }
 }
 
-// 글리프 padding-bottom 적용 함수
-function applyGlyphPaddingBottom() {
-  if (window.initialSettings && window.initialSettings.glyphPaddingBottom !== undefined) {
-    const glyphDivs = document.querySelectorAll('.glyphs-characters div');
-    if (glyphDivs.length > 0) {
-      glyphDivs.forEach(div => {
-        div.style.paddingBottom = window.initialSettings.glyphPaddingBottom + 'rem';
-        // ::before 가상 요소에도 padding-bottom 적용 (em 단위)
-        div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
-      });
-    }
-  }
-}
+// 글리프 padding-bottom 적용 함수는 main.js에서 처리됨
 
 // 윈도우 리사이즈 시 스케일링 재적용
 window.addEventListener('resize', applyResolutionScaling);
 
-// 페이지 로드 시 스케일링 적용
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(() => {
-    applyResolutionScaling();
-  }, 200);
-});
+// 스케일링은 main.js에서 처리됨
 
 // CSS 변수 설정 함수
 function setCSSScale() {
@@ -306,15 +300,18 @@ function changeFontSize(sizeValue) {
   const editableDiv = document.getElementById("textEditor");
   
   // 해상도별 스케일링 적용
-  if (window.scaleSettings) {
-    const { scale, breakpoint } = window.scaleSettings;
-    const isHighResolution = window.innerWidth >= breakpoint;
-    const scaleValue = isHighResolution ? scale : 1;
-    const scaledFontSize = sizeValue * scaleValue;
-    editableDiv.style.fontSize = scaledFontSize + "px";
-  } else {
-    editableDiv.style.fontSize = sizeValue + "px";
+  const is2560Plus = window.innerWidth >= 2560;
+  const is1720Plus = window.innerWidth > 1720;
+  
+  let scaleValue = 1;
+  if (is2560Plus) {
+    scaleValue = 3.5;
+  } else if (is1720Plus) {
+    scaleValue = 1.5;
   }
+  
+  const scaledFontSize = sizeValue * scaleValue;
+  editableDiv.style.fontSize = scaledFontSize + "px";
   
   updateLineHeight(lastHeightValue);
 }
