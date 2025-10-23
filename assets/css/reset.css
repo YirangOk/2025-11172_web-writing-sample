@@ -207,3 +207,33 @@ button, input, select, textarea {
   white-space: nowrap;
   border: 0;
 }
+
+/* Safari/iOS 전용 스타일 */
+@supports (-webkit-touch-callout: none) {
+  /* Safari에서 SVG 색상 고정 */
+  .cls-1,
+  .cls-2 {
+    fill: var(--main-color) !important;
+    -webkit-appearance: none;
+  }
+  
+  /* Safari에서 SVG 렌더링 최적화 */
+  svg {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Safari 터치 이벤트 최적화 */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Safari 스크롤 최적화 */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+}

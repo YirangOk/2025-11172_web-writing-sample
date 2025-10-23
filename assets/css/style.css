@@ -724,6 +724,7 @@ body[data-direction="1"] .writing-mode-control .icon-wrapper svg {
 }
 
 
+
 @media screen and (max-width: 1028px) {
   .controls-section {
     grid-template-columns: repeat(2, 1fr);
