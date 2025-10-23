@@ -214,7 +214,13 @@ button, input, select, textarea {
   .cls-1,
   .cls-2 {
     fill: var(--main-color) !important;
+    color: var(--main-color) !important;
     -webkit-appearance: none;
+  }
+  
+  /* SVG 컨테이너 색상 전파 */
+  .icon-wrapper {
+    color: var(--main-color) !important;
   }
   
   /* Safari에서 SVG 렌더링 최적화 */
@@ -223,6 +229,7 @@ button, input, select, textarea {
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    color: inherit;
   }
   
   /* Safari 터치 이벤트 최적화 */
@@ -235,5 +242,18 @@ button, input, select, textarea {
   /* Safari 스크롤 최적화 */
   body {
     -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Android 브라우저 전용 SVG 최적화 */
+@supports (-webkit-appearance: none) and (not (-webkit-touch-callout: none)) {
+  .cls-1,
+  .cls-2 {
+    fill: var(--main-color) !important;
+    color: var(--main-color);
+  }
+  
+  .icon-wrapper {
+    color: var(--main-color);
   }
 }

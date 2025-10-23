@@ -717,10 +717,26 @@ body[data-direction="1"] .writing-mode-control .icon-wrapper svg {
 /* SVG 전역 스타일 */
 .cls-1 {
   fill: var(--main-color);
+  fill: currentColor; /* fallback for mobile browsers */
 }
 
 .cls-2 {
   fill: var(--main-color);
+  fill: currentColor; /* fallback for mobile browsers */
+}
+
+/* 모바일 브라우저에서 SVG 색상 강제 적용 */
+@media screen and (max-width: 768px) {
+  .cls-1,
+  .cls-2 {
+    fill: var(--main-color) !important;
+    color: var(--main-color);
+  }
+  
+  /* SVG 컨테이너에 색상 전파 */
+  .icon-wrapper {
+    color: var(--main-color);
+  }
 }
 
 
