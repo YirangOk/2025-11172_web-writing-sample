@@ -113,6 +113,11 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         applyResolutionScaling();
       }, 100);
+      
+      // 글리프 padding-bottom 초기 적용
+      setTimeout(() => {
+        applyGlyphPaddingBottom();
+      }, 200);
     }
   }
 
@@ -250,6 +255,20 @@ function applyResolutionScaling() {
       // ::before 가상 요소에도 padding-bottom 적용 (em 단위)
       div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
     });
+  }
+}
+
+// 글리프 padding-bottom 적용 함수
+function applyGlyphPaddingBottom() {
+  if (window.initialSettings && window.initialSettings.glyphPaddingBottom !== undefined) {
+    const glyphDivs = document.querySelectorAll('.glyphs-characters div');
+    if (glyphDivs.length > 0) {
+      glyphDivs.forEach(div => {
+        div.style.paddingBottom = window.initialSettings.glyphPaddingBottom + 'rem';
+        // ::before 가상 요소에도 padding-bottom 적용 (em 단위)
+        div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
+      });
+    }
   }
 }
 

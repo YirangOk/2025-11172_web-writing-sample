@@ -421,6 +421,20 @@ body::selection {
   padding-bottom: 0;
 }
 
+/* 반응형 스케일링 */
+@media screen and (min-width: 1280px) {
+  .glyphs-characters div {
+    font-size: calc(var(--font-size) * 2.25);
+    height: calc(var(--font-size) * 2.75);
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .glyphs-characters div {
+    font-size: calc(var(--font-size) * 2.5);
+    height: calc(var(--font-size) * 3);
+  }
+}
 
 .glyphs-characters div span {
   transform: translateY(0);

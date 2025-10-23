@@ -106,6 +106,9 @@
       
       // 슬라이드 정보 업데이트
       updateSlideInfo();
+      
+      // 글리프 padding-bottom 적용
+      applyGlyphPaddingBottom();
     }
   }
 
@@ -157,9 +160,24 @@
     }
   }
 
+  // 글리프 padding-bottom 적용 함수
+  function applyGlyphPaddingBottom() {
+    if (window.initialSettings && window.initialSettings.glyphPaddingBottom !== undefined) {
+      const glyphDivs = document.querySelectorAll('.glyphs-characters div');
+      if (glyphDivs.length > 0) {
+        glyphDivs.forEach(div => {
+          div.style.paddingBottom = window.initialSettings.glyphPaddingBottom + 'rem';
+          // ::before 가상 요소에도 padding-bottom 적용 (em 단위)
+          div.style.setProperty('--glyph-padding-bottom', window.initialSettings.glyphPaddingBottom);
+        });
+      }
+    }
+  }
+
   // 전역 함수로 등록
   window.slideLeft = slideLeft;
   window.slideRight = slideRight;
+  window.applyGlyphPaddingBottom = applyGlyphPaddingBottom;
 
   // 폰트 변경 감지
   function setupFontChangeListener() {
