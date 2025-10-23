@@ -359,7 +359,7 @@ body::selection {
   display: flex;
   flex-direction: column;
   scroll-snap-align: start;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding-bottom: 1px;
   align-items: center;
 }
