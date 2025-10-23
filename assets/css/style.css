@@ -360,7 +360,7 @@ body::selection {
   flex-direction: column;
   scroll-snap-align: start;
   overflow-y: auto;
-  padding-bottom: 5rem;
+  padding-bottom: 1px;
   align-items: center;
 }
 
